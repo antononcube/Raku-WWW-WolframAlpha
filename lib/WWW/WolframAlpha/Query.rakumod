@@ -2,15 +2,9 @@ unit module WWW::WolframAlpha::Query;
 
 use WWW::WolframAlpha::Parameters;
 use WWW::WolframAlpha::Request;
+use Image::Markup::Utilities;
 use JSON::Fast;
 use URI::Encode;
-
-#============================================================
-# Known roles
-#============================================================
-
-my $knownRoles = Set.new(<user assistant>);
-
 
 #============================================================
 # Query
@@ -24,9 +18,11 @@ our proto WolframAlphaQuery($input is copy,
                             UInt :$timeout= 10,
                             :$output-format is copy = Whatever,
                             :$output is copy = 'json',
+                            Str :$path = 'query',
                             :$format is copy = Whatever,
                             Str :$method = 'tiny',
-                            Str :$base-url = 'http://api.wolframalpha.com/v2') is export {*}
+                            Str :$base-url = 'http://api.wolframalpha.com',
+                            *%args) is export {*}
 
 #| MistralAI completion access.
 multi sub WolframAlphaQuery(@inputs, *%args) {
@@ -39,9 +35,11 @@ multi sub WolframAlphaQuery($input is copy,
                             UInt :$timeout= 10,
                             :$output-format is copy = Whatever,
                             :$output is copy = 'json',
+                            Str :$path = 'query',
                             :$format is copy = Whatever,
                             Str :$method = 'tiny',
-                            Str :$base-url = 'http://api.wolframalpha.com/v2') {
+                            Str :$base-url = 'http://api.wolframalpha.com',
+                            *%args) {
 
     #------------------------------------------------------
     # Process $output-format
@@ -67,11 +65,22 @@ multi sub WolframAlphaQuery($input is copy,
     # Make WolframAlpha URL
     #------------------------------------------------------
 
-    my $url = $base-url ~ '/query?' ~ "input={uri_encode($input)}&format=$output-format&output=$output";
+    my $url = do given $path {
 
-    #------------------------------------------------------
-    # Delegate
-    #------------------------------------------------------
+        when 'result' {
+            if $format.isa(Whatever) { $format = 'asis'; }
+            my $units = %args<units> // '';
+            $base-url ~ "/v1/result?" ~ "input={ uri_encode($input) }" ~ ($units ?? "&units=$units" !! '');
+        }
+
+        when 'query' {
+            $base-url ~ "/v2/query?" ~ "input={ uri_encode($input) }&format=$output-format&output=$output";
+        }
+
+        default {
+            die 'Unknown path.'
+        }
+    }
 
     return wolfram-alpha-request(:$url, body => '', :$auth-key, :$timeout, :$format, :$method);
 }

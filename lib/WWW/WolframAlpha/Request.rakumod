@@ -1,7 +1,8 @@
-unit module WWW::MistralAI::Request;
+unit module WWW::Wolfram::Request;
 
 use JSON::Fast;
 use HTTP::Tiny;
+
 
 #============================================================
 # POST Tiny call
@@ -99,6 +100,26 @@ multi sub curl-post(Str :$url!,
     return $proc.out.slurp(:close);
 }
 
+#============================================================
+# Get auth-key
+#============================================================
+
+sub get-auth-key($auth-key is copy) is export {
+    if $auth-key.isa(Whatever) || ($auth-key ~~ Str:D) && $auth-key.lc eq 'Whatever' {
+        if %*ENV<WOLFRAM_ALPHA_API_KEY>:exists {
+            $auth-key = %*ENV<WOLFRAM_ALPHA_API_KEY>;
+        } elsif %*ENV<WOLFRAM_ALPHA_APPID>:exists {
+            $auth-key = %*ENV<WOLFRAM_ALPHA_APPID>;
+        } else {
+            fail %( error => %(
+                message => 'Cannot find Wolfram|Alpha authorization key. ' ~
+                        'Please provide a valid key to the argument auth-key, or set the ENV variable WOLFRAM_ALPHA_API_KEY.',
+                code => 401, status => 'NO_API_KEY'));
+        }
+    }
+
+    return $auth-key;
+}
 
 #============================================================
 # Request
@@ -138,18 +159,7 @@ multi sub wolfram-alpha-request(Str :$url!,
     #------------------------------------------------------
     # Process $auth-key
     #------------------------------------------------------
-    if $auth-key.isa(Whatever) {
-        if %*ENV<WOLFRAM_ALPHA_API_KEY>:exists {
-            $auth-key = %*ENV<WOLFRAM_ALPHA_API_KEY>;
-        } elsif %*ENV<WOLFRAM_ALPHA_APPID>:exists {
-            $auth-key = %*ENV<WOLFRAM_ALPHA_APPID>;
-        } else {
-            fail %( error => %(
-                message => 'Cannot find Wolfram|Alpha authorization key. ' ~
-                        'Please provide a valid key to the argument auth-key, or set the ENV variable WOLFRAM_ALPHA_API_KEY.',
-                code => 401, status => 'NO_API_KEY'));
-        }
-    }
+    $auth-key = get-auth-key($auth-key);
     die "The argument auth-key is expected to be a string or Whatever."
     unless $auth-key ~~ Str;
 

@@ -17,6 +17,7 @@
   "provides": {
     "WWW::WolframAlpha": "lib/WWW/WolframAlpha.rakumod",
     "WWW::WolframAlpha::Query": "lib/WWW/WolframAlpha/Query.rakumod",
+    "WWW::WolframAlpha::Simple": "lib/WWW/WolframAlpha/Simple.rakumod",
     "WWW::WolframAlpha::Parameters": "lib/WWW/WolframAlpha/Parameters.rakumod",
     "WWW::WolframAlpha::Request": "lib/WWW/WolframAlpha/Request.rakumod"
   },
