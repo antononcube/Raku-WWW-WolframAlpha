@@ -5,7 +5,7 @@
 This Raku package provides access to the service [Wolfram|Alpha](https://www.wolframalpha.com), [WA1].
 For more details of the Wolfram|Alpha's API usage see [the documentation](https://products.wolframalpha.com/api/documentation), [WA2].
 
-**Remark:** To use the Wolfram|Alpha API one has to register and obtain authorization key.
+**Remark:** To use the Wolfram|Alpha API one has to register and obtain an authorization key.
 
 
 -----
