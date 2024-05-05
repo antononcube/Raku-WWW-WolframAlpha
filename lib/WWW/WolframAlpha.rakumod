@@ -74,3 +74,40 @@ multi sub wolfram-alpha(**@args, *%args) {
         }
     }
 }
+
+
+#===========================================================
+# Convert W|A pods
+#===========================================================
+
+sub wa-subpod-converter(%subpod, Bool :$plaintext = False, UInt :$header-level = 3) {
+    return [
+        %subpod<title> ?? "{'#' x $header-level} {%subpod<title>}" !! '' ,
+        (!$plaintext && %subpod<img>) ?? "![]({%subpod<img><src>})" !! '',
+        %subpod<plaintext> ?? %subpod<plaintext> !! '',
+    ].join("\n\n")
+}
+
+sub wa-pod-converter(%pod, Bool :$plaintext = False, UInt :$header-level = 2) {
+    return [
+        "{'#' x $header-level} {%pod<title> // '*Unknonw*'}",
+        "**scanner:** " ~ %pod<scanner>,
+        |%pod<subpods>.map({ wa-subpod-converter($_, :$plaintext, header-level => $header-level + 1) })
+    ].join("\n\n")
+}
+
+proto sub wolfram-alpha-pods-to-markdown($waRes, Bool :$plaintext = False, UInt :$header-level = 2) is export {*}
+
+multi sub wolfram-alpha-pods-to-markdown(%waRes, Bool :$plaintext = False, UInt :$header-level = 2) {
+    my @pods = |%waRes<queryresult><pods> // |%waRes<pods> // Empty;
+    return wolfram-alpha-pods-to-markdown(@pods, :$plaintext, :$header-level);
+}
+
+multi sub wolfram-alpha-pods-to-markdown(@pods, Bool :$plaintext = False, UInt :$header-level = 2) {
+    return @pods.map({ wa-pod-converter($_, :$plaintext, :$header-level) }).join("\n\n");
+}
+
+# Overwrite
+multi sub data-translation($data, Str :$target = 'Markdown', *%args) is export {
+    return wolfram-alpha-pods-to-markdown($data, |%args);
+}
