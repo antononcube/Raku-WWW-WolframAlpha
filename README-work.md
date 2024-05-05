@@ -43,15 +43,13 @@ Here is a _result_ call:
 use WWW::WolframAlpha;
 wolfram-alpha-result('How many calories in 4 servings of potato salad?');
 ```
-```
-# about 720 dietary Calories
-```
 
-Here is a _simple_ call (produces and image, not included here):
+Here is a _simple_ call (produces and image):
 
-```perl6, result=asis
+```perl6, results=asis
 wolfram-alpha-simple('What is popularity of the name Larry?', format => 'md-image');
 ```
+
 
 -------
 
@@ -63,17 +61,6 @@ The package provides a Command Line Interface (CLI) script:
 
 ```shell
 wolfram-alpha --help
-```
-```
-# Usage:
-#   wolfram-alpha [<words> ...] [--path=<Str>] [--output-format=<Str>] [-a|--auth-key=<Str>] [--timeout[=UInt]] [-f|--format=<Str>] [--method=<Str>] -- Command given as a sequence of words.
-#   
-#     --path=<Str>             Path, one of 'result', 'simple', or 'query'. [default: 'result']
-#     --output-format=<Str>    The format in which the response is returned, one of 'json' or 'xml'. [default: 'json']
-#     -a|--auth-key=<Str>      Authorization key (to use WolframAlpha API.) [default: 'Whatever']
-#     --timeout[=UInt]         Timeout. [default: 10]
-#     -f|--format=<Str>        Format of the result; one of "json", "hash", "values", or "Whatever". [default: 'Whatever']
-#     --method=<Str>           Method for the HTTP POST query; one of "tiny" or "curl". [default: 'tiny']
 ```
 
 
