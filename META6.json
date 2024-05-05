@@ -10,7 +10,9 @@
   "depends": [
     "HTTP::Tiny:ver<0.2.5+>",
     "JSON::Fast:ver<0.17+>",
-    "IO::Socket::SSL:ver<0.0.2+>"
+    "IO::Socket::SSL:ver<0.0.2+>",
+    "Image::Markup::Utilities:ver<0.1.1+>",
+    "URI::Encode:ver<0.09+>"
   ],
   "build-depends": [],
   "test-depends": [],
