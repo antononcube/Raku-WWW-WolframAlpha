@@ -5,7 +5,7 @@
 This Raku package provides access to the service [Wolfram|Alpha](https://www.wolframalpha.com), [WA1].
 For more details of the Wolfram|Alpha's API usage see [the documentation](https://products.wolframalpha.com/api/documentation), [WA2].
 
-**Remark:** To use the Wolfram|Alpha API one has to register and obtain authorization key.
+**Remark:** To use the Wolfram|Alpha API one has to register and obtain an authorization key.
 
 
 -----
@@ -37,6 +37,8 @@ then the function `wolfam-alpha` attempt to use the env variable `WOLFRAM_ALPHA_
 The package has an universal "front-end" function `wolfram-alpha` for the 
 [different endpoints provided by Wolfram|Alpha Web API](https://products.wolframalpha.com/api/documentation).
 
+### (Plaintext) results
+
 Here is a _result_ call:
 
 ```perl6
@@ -44,12 +46,34 @@ use WWW::WolframAlpha;
 wolfram-alpha-result('How many calories in 4 servings of potato salad?');
 ```
 
+### Simple (image) results
+
 Here is a _simple_ call (produces and image):
 
 ```perl6, results=asis
 wolfram-alpha-simple('What is popularity of the name Larry?', format => 'md-image');
 ```
 
+### Full queries
+
+For the so called full queries Wolfram|Alpha returns complicated data of pods in either XML or JSON format;
+see ["Explanation of Pods"](https://products.wolframalpha.com/api/documentation?scrollTo=explanation-of-pods).
+
+Here we get W|A query result and its (complicated) data type (using ["Data::TypeSystem"](https://raku.land/zef:antononcube/Data::TypeSystem)):
+
+```perl6
+use Data::TypeSystem;
+
+my $podRes = wolfram-alpha-query('convert 44 lbs to kilograms', output => 'json', format => 'hash');
+
+deduce-type($podRes)
+```
+
+Here we convert the query result into Markdown (`data-translation` can be also used):
+
+```perl6, results=asis
+wolfram-alpha-pods-to-markdown($podRes, header-level => 4):plaintext;
+```
 
 -------
 
