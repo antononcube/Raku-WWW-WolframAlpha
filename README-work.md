@@ -1,5 +1,10 @@
 # WWW::WolframAlpha
 
+[![MacOS](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/macos.yml/badge.svg)](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/macos.yml)
+[![Linux](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/linux.yml/badge.svg)](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/linux.yml)
+[![Win64](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/windows.yml/badge.svg)](https://github.com/antononcube/Raku-WWW-WolframAlpha/actions/workflows/windows.yml)
+[![https://raku.land/zef:antononcube/WWW::WolframAlpha](https://raku.land/zef:antononcube/WWW::WolframAlpha/badges/version)](https://raku.land/zef:antononcube/WWW::WolframAlpha)
+
 ## In brief
 
 This Raku package provides access to the service [Wolfram|Alpha](https://www.wolframalpha.com), [WA1].
