@@ -105,7 +105,7 @@ multi sub curl-post(Str :$url!,
 #============================================================
 
 sub get-auth-key($auth-key is copy) is export {
-    if $auth-key.isa(Whatever) || ($auth-key ~~ Str:D) && $auth-key.lc eq 'Whatever' {
+    if $auth-key.isa(Whatever) || ($auth-key ~~ Str:D) && $auth-key.lc eq 'whatever' {
         if %*ENV<WOLFRAM_ALPHA_API_KEY>:exists {
             $auth-key = %*ENV<WOLFRAM_ALPHA_API_KEY>;
         } elsif %*ENV<WOLFRAM_ALPHA_APPID>:exists {

@@ -10,14 +10,14 @@ my %*SUB-MAIN-OPTS =
         ;
 
 #| Text processing using the WolframAlpha API.
-multi sub wolfam-alpha-front(Str $text,                          #= Text to be processed or audio file name.
-                       Str :$path = 'result',                    #= Path, one of 'result', 'simple', or 'query'.
-                       Str :$output-format = 'json',             #= The format in which the response is returned, one of 'json' or 'xml'.
-                       Str :a(:$auth-key) is copy = 'Whatever',  #= Authorization key (to use WolframAlpha API.)
-                       UInt :$timeout= 10,                       #= Timeout.
-                       Str :f(:$format) is copy = 'Whatever',    #= Format of the result; one of "json", "hash", "values", or "Whatever".
-                       Str :$method is copy = 'tiny',            #= Method for the HTTP POST query; one of "tiny" or "curl".
-                       ) {
+multi sub wolfram-alpha-front(Str $text,                                #= Text to be processed or audio file name.
+                              Str :$path = 'result',                    #= Path, one of 'result', 'simple', or 'query'.
+                              Str :$output-format is copy = 'Whatever', #= The format in which the response is returned.
+                              Str :a(:$auth-key) is copy = 'Whatever',  #= Authorization key (to use WolframAlpha API.)
+                              UInt :$timeout= 10,                       #= Timeout.
+                              Str :f(:$format) is copy = 'Whatever',    #= Format of the result; one of "json", "hash", "values", or "Whatever".
+                              Str :$method is copy = 'tiny',            #= Method for the HTTP POST query; one of "tiny" or "curl".
+                              ) {
 
     if $text.chars == 0 {
         note 'Nothing.';
@@ -26,12 +26,13 @@ multi sub wolfam-alpha-front(Str $text,                          #= Text to be p
 
     $auth-key = get-auth-key($auth-key);
 
-    if $format.lc ∈ <v value auto whatever> { $format = 'values'; }
+    if $format.lc ∈ <auto automatic whatever> { $format = 'asis'; }
 
+    my $outputFormatLocal = $output-format.lc ∈ <whatever automatic auto> ?? Whatever !! $output-format;
     my $res =
-            wolfam-alpha($text,
+            wolfram-alpha($text,
                     :$path,
-                    :$output-format,
+                    output-format => $outputFormatLocal,
                     :$auth-key,
                     :$timeout,
                     :$format,
@@ -48,11 +49,11 @@ multi sub MAIN
 #= Command given as a sequence of words.
 (*@words,
  Str :$path = 'result',                    #= Path, one of 'result', 'simple', or 'query'.
- Str :$output-format = 'json',             #= The format in which the response is returned, one of 'json' or 'xml'.
+ Str :$output-format = 'Whatever',         #= The format in which the response is returned.
  Str :a(:$auth-key) is copy = 'Whatever',  #= Authorization key (to use WolframAlpha API.)
  UInt :$timeout= 10,                       #= Timeout.
  Str :f(:$format) is copy = 'Whatever',    #= Format of the result; one of "json", "hash", "values", or "Whatever".
  Str :$method is copy = 'tiny',            #= Method for the HTTP POST query; one of "tiny" or "curl".
  ) {
-    return wolfam-alpha-front(@words.join(' ').Str, :$path, :$output-format, :$auth-key, :$timeout, :$format, :$method);
+    return wolfram-alpha-front(@words.join(' ').Str, :$path, :$output-format, :$auth-key, :$timeout, :$format, :$method);
 }

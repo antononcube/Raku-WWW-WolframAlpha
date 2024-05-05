@@ -47,7 +47,7 @@ multi sub WolframAlphaQuery($input is copy,
     my @knownFormats = ["image", "imagemap", "plaintext", "minput", "moutput", "cell", "mathml", "sound", "wav"];
     if $output-format.isa(Whatever) { $output-format = <plaintext image>; }
     if $output-format ~~ Str:D { $output-format = [$output-format, ]; }
-    die "The argument \$format is expected to be Whatever or one of the strings: { '"' ~ @knownFormats.join('", "') ~ '"' }, " ~
+    die "The argument \$output-format is expected to be Whatever or one of the strings: { '"' ~ @knownFormats.join('", "') ~ '"' }, " ~
             "or a list of those strings."
     unless ($output-format ~~ Positional:D) && ($output-format (-) @knownFormats).elems == 0;
 
