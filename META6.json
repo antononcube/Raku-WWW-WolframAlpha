@@ -1,7 +1,7 @@
 {
   "name": "WWW::WolframAlpha",
   "description": "WWW::WolframAlpha provides access to the Wolfram|Alpha functionalities (https://www.wolframalpha.com).",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "perl": "6.d",
   "authors": [
     "Anton Antonov"
