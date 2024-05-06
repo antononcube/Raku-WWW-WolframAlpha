@@ -59,6 +59,8 @@ Here is a _simple_ call (produces an image):
 wolfram-alpha-simple('What is popularity of the name Larry?', format => 'md-image');
 ```
 
+**Remark:** Pretty good conjectures of Larry Wall's birthday year or age can be made using the obtained graphs.
+
 ### Full queries
 
 For the so called *full queries* Wolfram|Alpha returns complicated data of pods in either XML or JSON format;
