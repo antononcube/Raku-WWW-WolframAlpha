@@ -108,6 +108,6 @@ multi sub wolfram-alpha-pods-to-markdown(@pods, Bool :$plaintext = False, UInt :
 }
 
 # Overwrite
-multi sub data-translation($data, Str :$target = 'Markdown', *%args) is export {
+multi sub data-translation($data, Str :$target! where $target.lc eq 'markdown', *%args) is export {
     return wolfram-alpha-pods-to-markdown($data, |%args);
 }
