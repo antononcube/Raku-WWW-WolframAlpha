@@ -1,0 +1,142 @@
+{
+  "Basic Parameters": [
+    {
+      "PARAMETER NAME": "input",
+      "FUNCTION": "URL-encoded text specifying the input string",
+      "DEFAULT VALUES": "N/A (Queries without an input value will fail)",
+      "NOTES": "Required parameter",
+      "SAMPLE VALUES": [
+        "\"5+largest+countries\"",
+        "\"Doppler%20shift\"",
+        "\"pascal%27s%20triangle\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "appid",
+      "FUNCTION": "An ID provided by Wolfram Research that identifies the application or organization making the request",
+      "DEFAULT VALUES": "N/A (Queries without an AppID will fail)",
+      "NOTES": "Required parameter",
+      "SAMPLE VALUES": [
+        "X7WEHY-W45KYJL3C9"
+      ]
+    },
+    {
+      "PARAMETER NAME": "format",
+      "FUNCTION": "The desired format for individual result pods",
+      "DEFAULT VALUES": "Return basic text and image formats (\"plaintext,image\")",
+      "NOTES": "All possible values for this parameter are listed here. For multiple formats, separate values with a comma.",
+      "SAMPLE VALUES": [
+        "\"image\"",
+        "\"imagemap\"",
+        "\"plaintext\"",
+        "\"minput\"",
+        "\"moutput\"",
+        "\"cell\"",
+        "\"mathml\"",
+        "\"sound\"",
+        "\"wav\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "output",
+      "FUNCTION": "The desired format for full results",
+      "DEFAULT VALUES": "Return an XML document",
+      "NOTES": "All possible values for this parameter are listed here",
+      "SAMPLE VALUES": [
+        "\"xml\"",
+        "\"json\""
+      ]
+    }
+  ],
+  "Pod Selection": [
+    {
+      "PARAMETER NAME": "includepodid",
+      "FUNCTION": "Specifies a pod ID to include in the result",
+      "DEFAULT VALUES": "All pods included",
+      "NOTES": "To specify multiple elements, use multiple instances of the parameter",
+      "SAMPLE VALUES": [
+        "\"Result\"",
+        "\"BasicInformation:PeopleData\"",
+        "\"DecimalApproximation\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "excludepodid",
+      "FUNCTION": "Specifies a pod ID to exclude from the result",
+      "DEFAULT VALUES": "No pods excluded",
+      "NOTES": "To specify multiple elements, use multiple instances of the parameter",
+      "SAMPLE VALUES": [
+        "\"Result\"",
+        "\"BasicInformation:PeopleData\"",
+        "\"DecimalApproximation\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "podtitle",
+      "FUNCTION": "Specifies a pod title to include in the result",
+      "DEFAULT VALUES": "All pods returned",
+      "NOTES": "To specify multiple elements, use multiple instances of the parameter. Use * as a wildcard to match zero or more characters in pod titles.",
+      "SAMPLE VALUES": [
+        "\"Basic+Information\"",
+        "\"Image\"",
+        "\"Alternative%20representations\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "podindex",
+      "FUNCTION": "Specifies the index(es) of the pod(s) to return",
+      "DEFAULT VALUES": "All pods returned",
+      "NOTES": "To specify multiple elements, separate values with a comma",
+      "SAMPLE VALUES": [
+        "\"1\"",
+        "\"7\"",
+        "\"5,12,13\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "scanner",
+      "FUNCTION": "Specifies that only pods produced by the given scanner should be returned",
+      "DEFAULT VALUES": "Pods from all scanners returned",
+      "NOTES": "To specify multiple elements, use multiple instances of the parameter",
+      "SAMPLE VALUES": [
+        "\"Numeric\"",
+        "\"Data\"",
+        "\"Traveling\""
+      ]
+    }
+  ],
+  "Location": [
+    {
+      "PARAMETER NAME": "ip",
+      "FUNCTION": "Specifies a custom query location based on an IP address",
+      "DEFAULT VALUES": "Use caller's IP address for location",
+      "NOTES": "Only one location parameter may be used at a time. IPv4 and IPv6 addresses are supported.",
+      "SAMPLE VALUES": [
+        "\"192.168.1.1\"",
+        "\"127.0.0.1\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "latlong",
+      "FUNCTION": "Specifies a custom query location based on a latitude/longitude pair",
+      "DEFAULT VALUES": "Use caller's IP address for location",
+      "NOTES": "Only one location parameter may be used at a time",
+      "SAMPLE VALUES": [
+        "\"40.42,-3.71\"",
+        "\"40.11, -88.24\"",
+        "\"0,0\""
+      ]
+    },
+    {
+      "PARAMETER NAME": "location",
+      "FUNCTION": "Specifies a custom query location based on a string",
+      "DEFAULT VALUES": "Use caller's IP address for location",
+      "NOTES": "Only one location parameter may be used at a time",
+      "SAMPLE VALUES": [
+        "\"Boston, MA\"",
+        "\"The North Pole\"",
+        "\"Beijing\""
+      ]
+    }
+  ]
+}
