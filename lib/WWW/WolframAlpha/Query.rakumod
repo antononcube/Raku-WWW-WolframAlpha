@@ -60,6 +60,16 @@ multi sub WolframAlphaQuery($input is copy,
     die "The argument \$output is expected to be Whatever or one of the strings 'json' or 'xml'."
     unless ($output ~~ Str:D) && $output ∈ <json xml>;
 
+    #------------------------------------------------------
+    # Process additional parameters
+    #------------------------------------------------------
+    my @knownParams = <includepodid excludepodid podtitle podindex scanner ip latlong location width maxwidth plotwidth mag reinterpret translation ignorecase sig assumption podstate units>;
+    my $extraParams = '';
+    for @knownParams -> $p {
+        if %args{$p}:exists {
+            $extraParams ~= "&$p={uri_encode(%args{$p})}";
+        }
+    }
 
     #------------------------------------------------------
     # Make WolframAlpha URL
@@ -74,7 +84,7 @@ multi sub WolframAlphaQuery($input is copy,
         }
 
         when 'query' {
-            $base-url ~ "/v2/query?" ~ "input={ uri_encode($input) }&format=$output-format&output=$output";
+            $base-url ~ "/v2/query?" ~ "input={ uri_encode($input) }&format=$output-format&output=$output" ~ $extraParams;
         }
 
         default {
